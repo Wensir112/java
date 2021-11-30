@@ -1,0 +1,114 @@
+package day1130;
+
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class JianTing extends Frame {
+	static boolean tag = true;//标签
+
+	public static void main(String[] args) {
+		JianTing frame = new JianTing();  //对象
+		frame.setSize(400, 400); //布局
+		frame.setBackground(Color.BLUE); // 颜色
+		Button button = new Button("查看效果");  //按键 的布局
+		frame.setLayout(new FlowLayout(FlowLayout.LEFT, 150, 150));//
+		frame.add(button);
+		frame.setVisible(true);
+
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+
+				System.exit(0);
+
+			}
+		});
+
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!tag)
+					return;
+				// TODO Auto-generated method stub
+				System.out.println("11111");
+			}
+		});
+
+	}
+
+}
+
+
+
+package day1130;
+
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class JianTing2 extends Frame implements Runnable {
+	static boolean tag = true;
+	static JianTing2 frame = new JianTing2();
+	static Button button = new Button("点击倒计时");
+	@Override
+	public void run() {
+		int count = 3;
+		while (!tag) {
+			button.setLabel(count + "s");
+			count--;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (count == -1) {
+				tag = true;
+				button.setLabel("结束，点");
+			}
+		}
+
+	}
+
+	public static void main(String[] args) {
+
+		frame.setSize(400, 400);
+		frame.setBackground(Color.BLUE);
+         
+		frame.setLayout(new FlowLayout(FlowLayout.CENTER, 150, 150));
+		frame.add(button);
+		frame.setVisible(true);
+
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+
+				System.exit(0);
+			}
+		});
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!tag)
+					return;
+				tag = false;
+				Thread thread = new Thread(frame);
+				thread.start();
+			}
+		});
+
+	}
+
+}
