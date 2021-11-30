@@ -1,0 +1,112 @@
+package day1122;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+
+public class CopyUtil {
+
+	public static final String copyProperties = null;
+	public static Object copy;
+	private static Object objSrc;
+	
+	public static final String GETTER_PREFIX="get";
+	public static final String SETTER_PREFIX="set";
+	
+		
+	
+	
+	public static void copyProperties(Object object, Object objTarget) {
+		
+		Class target= objTarget.getClass();
+		
+		
+		Class src =objSrc.getClass();
+		Method[] methods =target.getDeclaredMethods();
+		for(Method m : methods) {
+			
+			if (m.getName().startsWith(SETTER_PREFIX)) {
+				Class clz =m.getParameterTypes()[0];
+				String srcMethodName = getGetterMethod(m.getName());
+				Object value =getValue(objSrc,srcMethodName);
+			try {	
+				setValue(objTarget,m,clz,value);
+			}catch(SecurityException| IllegalArgumentException e) {
+				
+				
+			}
+			}
+		}
+		
+		
+		
+	}
+
+
+	public static Object getValue(Object objSrc,String MethodName) {
+		Object value =null;
+		return null;
+		try {
+			Method method =objSrc.getClass().getMethod(MethodName, null);
+			if(null!=method) {
+				value =method.invoke(objSrc, null);
+			}
+			if(method.getReturnType()==BigDecimal.class) {
+				return new BigDecimal(value.toString());
+			}else if(method.getReturnType()==Boolean.class) {
+				return Boolean.valueOf(value.toString());
+			}else if(method.getReturnType()==Integer.class) {
+				return Integer.valueOf(value.toString());
+			}else if(method.getReturnType()==String.class) {
+				return String.valueOf(value);
+			}
+			return value;
+		
+	
+	//	}
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+
+
+	private static void setValue(Object objTarget, Method m, Class clz, Object value) {
+		// TODO Auto-generated method stub
+		
+		try {
+			if(clz==int.class) {
+		}else if (clz==Boolean.class) {
+		 clz =Boolean.class;	
+		}
+			if(clz ==value.getClass()) {
+				m.invoke(objTarget, value);
+			}
+		}catch ( InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	
+	} 
+
+
+
+
+	private static Object getValue(Class objSrc, String srcMethodName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+
+	private static String getGetterMethod(String name) {
+		
+		return  GETTER_PREFIX.concat(name).substring(3);
+	}
+
+}
