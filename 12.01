@@ -1,0 +1,210 @@
+package day1201;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+public class ThreadPriorityDemo  extends Thread{
+
+	private Random  rm= new Random();
+	
+	public void run() {
+		System.out.println(this.getName()+"-优先级>"+this.getPriority()+"开始执行！");
+		StringBuilder sBuilder =new StringBuilder();
+		for (int i = 0; i < 100 ; i++) {
+			sBuilder.append(rm.nextInt(1000)+",");
+			
+		}
+		for (int j=sBuilder.length()-1;j>=0;j--) {
+			if (j%2==0) {
+				
+			}
+		}
+	}
+	public static void main(String[] args) throws InterruptedException   {
+		
+		System.out.println("不设定优先级执行！");
+	    List<Thread>list=new LinkedList<>();
+	    for (int i = 0; i < 10; i++) {
+	    //创建10个默认优先级的线程对象，放入链表中。
+	    	ThreadPriorityDemo thread =new ThreadPriorityDemo();
+	    	//给线程设置优先级
+	    	list.add(thread);
+		}
+	    for (Thread t:list) {
+	    	t.start();
+	    }
+	    
+	    
+	    
+	    Thread.sleep(2000);
+	    list.clear();
+	    System.out.println("************");
+	    System.out.println("设定优先级执行！");
+	    for (int i = 0; i < 10; i++) {
+	    	//创建10个线程对象
+	    	ThreadPriorityDemo thread =new ThreadPriorityDemo();
+			if((i+1)%3==0) {
+				thread.setPriority(10);
+				//能被3整除的优先级设置为10
+			}else if ((i+1)%2==0) {
+				//能被2整除的优先级设置为1
+				thread.setPriority(1);
+			}
+			list.add(thread);
+			
+			
+			
+			
+		}
+	    
+	    
+	    for (Thread t:list) {
+	    	
+	    	t.start();
+	    }
+	    
+	    
+	    
+	    
+	    
+	}
+	
+	
+}
+
+
+package day1201;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
+public class JoinDemo {
+public static void main(String[] args) {
+	System.out.println("主线程开始！");
+	List<Integer>list =new LinkedList<Integer>();
+	//初始化线程
+	ThreadB thread =new ThreadB(list);
+	ThreadA threadA =new ThreadA(list,thread);
+	
+	thread.start();
+	threadA.start();
+	//线程运行
+	try {
+		threadA.join();
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+	System.out.println("主线程结束！");
+}
+	
+	
+	
+}
+class ThreadA extends Thread{
+	private List<Integer>list;
+	private ThreadB threadB;
+	public ThreadA(List<Integer>linkedList,ThreadB thread) {
+		
+		list=linkedList;
+		threadB=thread;
+	}
+	
+   public void run() {
+	System.out.println(Thread.currentThread().getName()+"开始执行!");
+	
+	try {
+		threadB.join();
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+	int count =1;
+	for(Integer i:list) {
+		if(count%10==0) {
+			System.out.println(i);
+		}	else {
+				System.out.println(i+",");
+				
+				
+			}
+		count++;
+		
+		
+		}
+		System.out.println(Thread.currentThread().getName()+"执行结束！");
+	}
+	
+	
+	
+}
+	class ThreadB extends Thread{
+		Random rm =new Random();
+		private List<Integer>list;
+		public ThreadB(List<Integer>list) {
+			this.list=list;
+			
+		}
+		
+		@Override
+		public void run() {
+			System.out.println(Thread.currentThread().getName()+"开始执行!");
+			for (int i = 0; i < 100; i++) {
+				list.add(rm.nextInt(1000));
+				
+				
+			}
+			System.out.println(Thread.currentThread().getName()+"执行结束！");
+		}
+	}
+	
+
+package day1201;
+
+import java.util.List;
+
+public class ThreadB {
+
+	public ThreadB(List<Integer> list) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void join() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+package day1201;
+
+import java.util.List;
+
+public class ThreadA  {
+
+	public ThreadA(List<Integer> list, ThreadA thread) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ThreadA(List<Integer> list, ThreadB thread) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void join() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
+
+心得了解线程的优先级
+
