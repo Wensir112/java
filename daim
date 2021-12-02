@@ -1,0 +1,16 @@
+public static void sleep(long millis, int nanos) throws InterruptedException {
+    if (millis < 0) { // 当毫秒数小于0，就抛异常
+        throw new IllegalArgumentException("timeout value is negative");
+    }
+ 
+    if (nanos < 0 || nanos > 999999) { // 纳秒数超过该范围, 就抛异常
+        throw new IllegalArgumentException("nanosecond timeout value out of range");
+    }
+ 
+    if (nanos >= 500000 || (nanos != 0 && millis == 0)) {
+        millis++;
+    }
+ 
+    sleep(millis); // 指定睡眠的毫秒数
+}
+总结：了解了线程休眠
