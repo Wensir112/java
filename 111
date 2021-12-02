@@ -1,0 +1,61 @@
+package com.example.hello.activity.tanchishe;
+
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.hello.R;
+
+public class MainActivity  extends AppCompatActivity {
+    int w;
+    int h;
+    TextView[][]textViews =new  TextView[20][20];
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+       w = getScreenSize()[0];
+       h = getScreenSize()[1];
+        LinearLayout linearLayout =new LinearLayout(this);
+
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        setContentView(linearLayout);
+
+
+        for (int i = 0; i < 20; i++) {
+         LinearLayout layout = new LinearLayout(this);
+
+            ViewGroup.LayoutParams p= new LinearLayout.LayoutParams(w,h/20);
+
+
+            layout.setLayoutParams(p);
+            for (int j = 0; j <20 ; j++) {
+                TextView textView=new  TextView(this);
+                ViewGroup.LayoutParams p1= new LinearLayout.LayoutParams(w/20,h/20);
+
+
+                textView.setLayoutParams(p1);
+                 textView.setText("1");
+                 textViews[i][j]=textView;
+                layout.addView(textView);
+            }
+
+             linearLayout.addView(layout);
+
+        }
+
+
+    }
+
+
+    public int[] getScreenSize() {
+        int[] screenSize = new int[0];
+        return screenSize;
+    }
+}
+总结：了解了贪吃蛇的布局。
