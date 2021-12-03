@@ -1,0 +1,50 @@
+package day1201;
+
+public class GetWaterCrushDemo extends Thread {
+	public static void main(String[] args) {
+		 for (int i = 0; i < 10; i++) {
+	
+			 PersinAsy person =new PersinAsy();
+			 person.setName("奶牛"+i);
+			 GetWaterCrushDemo crush =new GetWaterCrushDemo();
+			 crush.start();
+		}
+	}
+
+
+	private PersonAsy personAsy;
+
+	
+	public void getWater(PersonAsy personAsy) {
+		System.out.println(personAsy.getName()+"开始产奶:");
+		try {
+			Thread.currentThread();
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(personAsy.getName()+"产奶结束!");
+	}
+	
+	    
+		public void run() {
+			this.getWater(personAsy);
+			
+		}
+	}
+	class PersinAsy{
+		public String name;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+	}
+	
+	
+心得：了解了非同步概念。
+
