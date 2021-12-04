@@ -1,0 +1,30 @@
+package day1202;
+
+import java.util.Date;
+
+public class Sleep {
+
+	public class Main {
+	  
+	    public void main(String[] args) throws Exception {
+			// 先吃饭再喝酒
+	        eat();
+	        drink();
+	    }
+
+	    private void eat() throws Exception {
+	        System.out.println("开始吃饭?...\t" + new Date());
+	        Thread.sleep(5000);
+	        System.out.println("结束吃饭?...\t" + new Date());
+	    }
+
+	    private void drink() throws Exception {
+	        System.out.println("开始喝酒?️...\t" + new Date());
+	        Thread.sleep(5000);
+	        System.out.println("结束喝酒?...\t" + new Date());
+	    }
+	}
+}
+
+
+心得：了解了顺序编程。
